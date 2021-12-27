@@ -5,4 +5,4 @@ cp -rf ../*.json ./target
 cp -rf ../src ./target
 
 
-sudo docker build -t ms/post .
+sudo docker build -t ms/get .

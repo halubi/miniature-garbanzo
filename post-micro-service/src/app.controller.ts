@@ -6,8 +6,8 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post('/resource')
-  postItem(@Body() body: any): void {
-    this.appService.postItem(body);
+  postItem(@Body() body: any): string {
+    return this.appService.postItem(body);
   }
 
   @Get('/resource')

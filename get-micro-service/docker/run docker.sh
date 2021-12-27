@@ -1,0 +1,1 @@
+sudo docker run -p 80:3001 argus/post
