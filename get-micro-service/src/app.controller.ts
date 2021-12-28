@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { map } from 'rxjs';
 import { AppService } from './app.service';
 
 @Controller('rest/api')
@@ -6,7 +7,7 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/resource')
-  async getItem(): Promise<any> {
-    return await this.appService.getItem();
+  getItem() {
+    return this.appService.getItem().pipe(map((response) => response.data));
   }
 }
