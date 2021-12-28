@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AppService {
   constructor(private httpService: HttpService) {}
-  private url =
-    'http://ec2-18-194-79-132.eu-central-1.compute.amazonaws.com/rest/api/resource';
+  /**
+   * http get method to the other ec2 instance requesting the content that hase been posted
+   * @returns the content from earlier post request
+   */
   getItem(): Observable<any> {
     try {
-      const item = this.httpService.get(this.url);
-      console.log('item', item);
-
+      const item = this.httpService.get(process.env.URL);
       return item;
     } catch (error) {
       console.error('Error geting item. ', error);
