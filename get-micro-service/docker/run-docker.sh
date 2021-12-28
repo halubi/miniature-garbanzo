@@ -1,1 +1,1 @@
-sudo docker run -p 80:3000 ms/get
+sudo docker run -p 80:3001 ms/get
