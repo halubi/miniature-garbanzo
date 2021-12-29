@@ -10,10 +10,10 @@ export class AppService {
   postItem(item): string {
     try {
       fs.writeFileSync(`temp.txt`, JSON.stringify(item));
-      return `You posted ${item} successfuly`;
+      return `You posted successfuly`;
     } catch (error) {
       console.error('Error in Post ', error);
-      throw error;
+      throw 'Error in Post';
     }
   }
 
@@ -27,7 +27,7 @@ export class AppService {
       return JSON.parse(fs.readFileSync(`temp.txt`).toString());
     } catch (error) {
       console.error('Error in Get ', error);
-      throw error;
+      throw 'Error in Get';
     }
   }
 }

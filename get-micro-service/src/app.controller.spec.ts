@@ -1,22 +1,33 @@
-// import { Test, TestingModule } from '@nestjs/testing';
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
+import * as request from 'supertest';
+import { INestApplication } from '@nestjs/common';
+import { AppModule } from './app.module';
+import { Test } from '@nestjs/testing';
 
-// describe('AppController', () => {
-//   let appController: AppController;
+describe('App', () => {
+  let app: INestApplication;
+  const mock = '{"something":"blablablai"}';
+  const appService = { getItem: () => mock };
 
-//   beforeEach(async () => {
-//     const app: TestingModule = await Test.createTestingModule({
-//       controllers: [AppController],
-//       providers: [AppService],
-//     }).compile();
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule],
+    })
+      .overrideProvider(appService)
+      .useValue(appService)
+      .compile();
 
-//     appController = app.get<AppController>(AppController);
-//   });
+    app = moduleRef.createNestApplication();
+    await app.init();
+  });
 
-//   describe('root', () => {
-//     it('should return "Hello World!"', () => {
-//       expect(appController.getHello()).toBe('Hello World!');
-//     });
-//   });
-// });
+  it(`/GET /rest/api/resource`, () => {
+    return request(app.getHttpServer())
+      .get('/rest/api/resource')
+      .expect(200)
+      .expect(appService.getItem());
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+});
